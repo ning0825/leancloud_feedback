@@ -1,7 +1,8 @@
 name: leancloud_feedback
-description: A Feedback package using lean cloud REST API.
+description: A Feedback package using lean cloud REST API. And, a conversation widget that can be used to display/send messages.
 version: 0.0.2
 homepage: https://慌.com
+repository: https://github.com/ning0825/leancloud_feedback
 
 
 environment:

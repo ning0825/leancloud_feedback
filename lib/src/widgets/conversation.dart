@@ -7,14 +7,16 @@ import 'package:leancloud_feedback/leancloud_feedback.dart';
 ///just like what you can see in every IM app. You can use this as
 ///demostration purpose.
 class ConversationWidget extends StatefulWidget {
-  ///[messages]: Contains all messages between `dev` and `user`, you can call [fetchMessages] to get it.
-  ///[onSendText]: The callback when user press send button.
-  ///[role]: Make message be display on the correct side(left or right). This only accept two values 'dev' and user'.
   const ConversationWidget({this.messages, this.onSendText, this.role = 'user'})
       : assert(role == 'dev' || role == 'user');
 
+  ///[messages]: Contains all messages between `dev` and `user`, you can call [fetchMessages] to get it.
   final List<Message> messages;
+
+  ///[onSendText]: The callback when user press send button.
   final Function(String) onSendText;
+
+  ///[role]: Make message be display on the correct side(left or right). This only accept two values 'dev' and user'.
   final String role;
 
   @override
