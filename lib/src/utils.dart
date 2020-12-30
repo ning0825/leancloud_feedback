@@ -3,6 +3,10 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
+import '../leancloud_feedback.dart';
+import '../leancloud_feedback.dart';
+import '../leancloud_feedback.dart';
+import '../leancloud_feedback.dart';
 import 'models/send_response.dart';
 import 'models/message_response.dart';
 import 'models/thread_response.dart';
@@ -16,6 +20,8 @@ Map<String, String> _headers;
 
 String _get = 'GET';
 String _post = 'POST';
+String _del = 'DELETE';
+String _put = 'PUT';
 
 http.Client _client;
 
@@ -102,6 +108,41 @@ Future<List<Message>> fetchMessages(String threadId) async {
           ConversationResponse.fromJson(response as Map<String, dynamic>)
               .results);
   return messages;
+}
+
+Future<bool> delThread(String threadId) async {
+  var isDelOK = false;
+  await _callRestAPI(
+    _del,
+    _feedbackBaseUrl + '/$threadId',
+    onResponse: (response) => isDelOK = true,
+  );
+  return isDelOK;
+}
+
+extension UpdateStatus on Thread {
+  ///Update this thread's status to 'open'.
+  Future<bool> open() async {
+    return _updateThreadStatus(objectId, 'open');
+  }
+
+  ///Update this thread's status to 'close'.
+  Future<bool> close() async {
+    return _updateThreadStatus(objectId, 'close');
+  }
+}
+
+Future<bool> _updateThreadStatus(String threadId, String status) async {
+  bool updatedSuccess = false;
+  await _callRestAPI(
+    _put,
+    _feedbackBaseUrl + '/$threadId',
+    body: '{"status":"$status"}',
+    onResponse: (response) {
+      updatedSuccess = true;
+    },
+  );
+  return updatedSuccess;
 }
 
 ///General http request function for all REST API call.
